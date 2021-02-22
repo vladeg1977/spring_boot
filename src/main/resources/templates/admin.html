@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>All_Users</title>
+    <style>
+        table th, table td {padding: 5px;}
+    </style>
+</head>
+<body>
+<div>
+    <p>USERS</p>
+    <table border="1" >
+        <tr>
+            <th>USER ID</th>
+            <th>NAME</th>
+            <th>LOGIN</th>
+            <th>PASSWORD</th>
+            <th>ROLES</th>
+            <th>ACTION</th>
+        </tr>
+        <tr th:each="user : ${users}">
+            <td th:utext="${user.getId()}"></td>
+            <td th:utext="${user.getName()}"></td>
+            <td th:utext="${user.getLogin()}"></td>
+            <td th:utext="${user.getPassword()}"></td>
+            <td>
+                <div th:each="role : ${user.getAuthorities()}">
+                    <span th:utext="${role.getAuthority()}"></span>
+                </div>
+            </td>
+            <td><a th:href="@{/admin/{id}/edit(id=${user.getId()})}">Update</a></td>
+            <td>
+                <form action="/admin/delete" method="post">
+                    <input type="hidden" name="user_id" th:value="${user.getId()}"/>
+                    <input type="submit" value="Delete"/>
+                </form>
+            </td>
+            <hr/>
+            <a th:href="@{/admin/{id}(id=${user.getId()})}" th:utext="${user.getId()}"></a>
+        </tr>
+    </table>
+    <a th:href="@{/admin/new}">Add User</a>
+
+    <br>
+    <a th:href="@{/user}">User</a>
+
+    <div th:fragment="logout">
+        <a th:href="@{/logout}">Exit</a>
+    </div>
+</div>
+</body>
+</html>

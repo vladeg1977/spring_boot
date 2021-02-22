@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>User</title>
+    <style>
+        table th, table td {padding: 5px;}
+    </style>
+</head>
+<body>
+<table border="1">
+    <tr>
+        <th>USER ID</th>
+        <th>NAME</th>
+        <th>LOGIN</th>
+        <th>PASSWORD</th>
+        <th>ROLES</th>
+    </tr>
+    <tr th:object="${user}">
+        <td th:utext="*{getId()}"></td>
+        <td th:utext="*{getName()}"></td>
+        <td th:utext="*{getLogin()}"></td>
+        <td th:utext="*{getPassword()}"></td>
+        <td>
+            <div th:each="role : *{getAuthorities()}">
+                <span th:utext="${role.getAuthority()}"></span>
+            </div>
+        </td>
+    </tr>
+</table>
+<div th:insert="admin :: logout"></div>
+</body>
+</html>
